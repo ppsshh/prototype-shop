@@ -7,12 +7,12 @@ import AppStateProvider from './providers/AppStateProvider';
 function App() {
   return (
     <AppStateProvider>
-      <Header />
-      <div className="container">
-        <Prototypes />
-        <Orders />
-        <Footer />
-      </div>
+        <Header />
+        <div className="container">
+          <Prototypes />
+          <Orders />
+          <Footer />
+        </div>
     </AppStateProvider>
   );
 }

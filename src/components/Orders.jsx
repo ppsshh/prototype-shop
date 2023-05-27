@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import useOrders from "../hooks/useOrders";
 import useActions from "../hooks/useActions";
 import usePrototypes from "../hooks/usePrototypes";
@@ -7,6 +8,7 @@ export default function Orders() {
     const orders = useOrders();
     const prototypes = usePrototypes();
     const { remove, removeAll } = useActions();
+    const navigate = useNavigate();
 
     const totalPrice = useMemo(() => {
         return orders.map(order => {
@@ -15,6 +17,16 @@ export default function Orders() {
             return prototype.price * quantity;
         }).reduce((l, r) => l + r, 0);
     }, [orders, prototypes]);
+
+    const navigateToCheckout = () => {
+        navigate("/Checkout", {
+            state: {
+                orders: orders,
+                prototypes: prototypes,
+                totalPrice: totalPrice
+            }
+        });
+    };
 
     if (orders.length === 0) {
         return (
@@ -68,7 +80,11 @@ export default function Orders() {
                         </button>
                     </div>
                     <button
-                        className="btn btn--secondary" style={{ width: "100%", marginTop: 10 }}>
+                        className="btn btn--secondary"
+                        style={{ width: "100%", marginTop: 10 }}
+                        onClick={navigateToCheckout}
+                    >
+
                         Checkout
                     </button>
                 </div>
